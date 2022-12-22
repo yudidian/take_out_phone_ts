@@ -23,6 +23,10 @@ export default defineConfig({
 			]
 		})
 	],
+	css: {
+		devSourcemap: true,
+		preprocessorOptions: {}
+	},
 	resolve: {
 		alias: {
 			"@": path.join(__dirname, "src")

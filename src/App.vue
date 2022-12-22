@@ -10,7 +10,7 @@
 	</div>
 	<MyLoading :show="store.getters.showLoading" />
 </template>
-<script setup>
+<script setup lang="ts">
 import { useStore } from "@/store";
 import { isWeiXin } from "@/utils/common";
 import { ref } from "vue";

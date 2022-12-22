@@ -39,7 +39,6 @@ import { Form, Field, CellGroup, Button, Notify } from "vant";
 import { onBeforeUnmount, reactive, ref } from "vue";
 import { sendCode } from "@/api/module/user";
 import { useStore } from "@/store";
-import { BaseResponse } from "@/views/types/globle";
 import { LoginSendType } from "@/api/interface/SendType";
 
 const store = useStore();
@@ -55,7 +54,7 @@ const onSubmit = () => {
 };
 // 发送验证码
 const sendCodeHandler = async () => {
-	const res: BaseResponse<null> = await sendCode({
+	const res = await sendCode({
 		email: form.email
 	});
 	if (res.code === 1) {

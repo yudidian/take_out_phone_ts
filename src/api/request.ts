@@ -2,6 +2,7 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import { Notify } from "vant";
 import router from "@/router/index";
 import store from "@/store";
+import { BaseResponse } from "@/views/types/globle";
 const request = axios.create({
 	baseURL: "/api",
 	timeout: 100000
@@ -41,7 +42,7 @@ request.interceptors.response.use(
 			});
 			router.replace("/login").then();
 		}
-		return res.data;
+		return res;
 	},
 	error => {
 		store.commit("changShowLoading", false);
@@ -65,4 +66,49 @@ request.interceptors.response.use(
 		});
 	}
 );
+export const httpPost: (url: string, data?: any, headers?: any) => Promise<BaseResponse> = (url, data, headers) => {
+	return new Promise<BaseResponse>(resolve => {
+		request({
+			url,
+			method: "POST",
+			data,
+			headers
+		}).then((res: AxiosResponse<BaseResponse>) => {
+			resolve(res.data);
+		});
+	});
+};
+export const httpPut: (url: string, data: any) => Promise<BaseResponse> = (url, data) => {
+	return new Promise<BaseResponse>(resolve => {
+		request({
+			url,
+			method: "put",
+			data
+		}).then((res: AxiosResponse<BaseResponse>) => {
+			resolve(res.data);
+		});
+	});
+};
+export const httpGet: (url: string, params?: any) => Promise<BaseResponse> = (url: string, params?: any) => {
+	return new Promise<BaseResponse>(resolve => {
+		request({
+			url,
+			method: "get",
+			params
+		}).then((res: AxiosResponse<BaseResponse>) => {
+			resolve(res.data);
+		});
+	});
+};
+export const httpDelete: (url: string, params: any) => Promise<BaseResponse> = (url: string, params: any) => {
+	return new Promise<BaseResponse>(resolve => {
+		request({
+			url,
+			method: "delete",
+			params
+		}).then((res: AxiosResponse<BaseResponse>) => {
+			resolve(res.data);
+		});
+	});
+};
 export default request;

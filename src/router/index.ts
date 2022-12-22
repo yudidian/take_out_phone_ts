@@ -6,6 +6,24 @@ const routes: RouteRecordRaw[] = [
 		path: "/login",
 		name: "login",
 		component: () => import("@/views/login/LoginPage.vue")
+	},
+	{
+		path: "/",
+		component: () => import("@/layout/LayoutPage.vue"),
+		redirect: "/home",
+		name: "LayoutPage",
+		children: [
+			{
+				path: "/home",
+				name: "HomePage",
+				meta: {
+					index: 1,
+					title: "首页",
+					keepAlive: true
+				},
+				component: () => import("@/views/home/HomePage.vue")
+			}
+		]
 	}
 ];
 
