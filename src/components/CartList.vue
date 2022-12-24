@@ -22,16 +22,17 @@
 	</div>
 </template>
 
-<script setup name="CartList">
+<script setup name="CartList" lang="ts">
 import { Button, Card, Cell, CellGroup, Dialog, Notify, Empty } from "vant";
-import { sendAddCart, sendDeleteCartOne, sendGetCartList, sendLessCartCount } from "@/api/module/goods.js";
+import { sendAddCart, sendDeleteCartOne, sendGetCartList, sendLessCartCount } from "@/api/module/goods";
 import { computed, onMounted, ref, watch } from "vue";
-import { useStore } from "vuex";
+import { useStore } from "@/store";
+import { CartList } from "@/components/interface/type";
 const store = useStore();
 const emits = defineEmits(["getPrice", "getCartLength"]);
 const IMG_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
 // 购物车列表
-const cartInfoList = ref([]);
+const cartInfoList = ref<Array<CartList>>([]);
 onMounted(() => {
 	getCartList();
 });
@@ -45,7 +46,7 @@ const price = computed(() => {
 	}
 });
 // 商品数量加减
-const addOrLessHandler = async (item, flag, index) => {
+const addOrLessHandler = async (item: CartList, flag: string, index: number) => {
 	if (item.number >= 99) {
 		Notify({
 			type: "danger",

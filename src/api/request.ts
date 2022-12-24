@@ -66,7 +66,8 @@ request.interceptors.response.use(
 		});
 	}
 );
-export const httpPost: (url: string, data?: any, headers?: any) => Promise<BaseResponse> = (url, data, headers) => {
+
+export const httpPost = <T = any>(url: string, data?: T, headers?: any) => {
 	return new Promise<BaseResponse>(resolve => {
 		request({
 			url,
@@ -78,7 +79,7 @@ export const httpPost: (url: string, data?: any, headers?: any) => Promise<BaseR
 		});
 	});
 };
-export const httpPut: (url: string, data: any) => Promise<BaseResponse> = (url, data) => {
+export const httpPut = <T = any>(url: string, data: T) => {
 	return new Promise<BaseResponse>(resolve => {
 		request({
 			url,
@@ -89,7 +90,7 @@ export const httpPut: (url: string, data: any) => Promise<BaseResponse> = (url, 
 		});
 	});
 };
-export const httpGet: (url: string, params?: any) => Promise<BaseResponse> = (url: string, params?: any) => {
+export const httpGet = <T = any>(url: string, params?: T) => {
 	return new Promise<BaseResponse>(resolve => {
 		request({
 			url,
@@ -100,12 +101,25 @@ export const httpGet: (url: string, params?: any) => Promise<BaseResponse> = (ur
 		});
 	});
 };
-export const httpDelete: (url: string, params: any) => Promise<BaseResponse> = (url: string, params: any) => {
+export const httpDelete = <T = any>(url: string, params: T) => {
 	return new Promise<BaseResponse>(resolve => {
 		request({
 			url,
 			method: "delete",
 			params
+		}).then((res: AxiosResponse<BaseResponse>) => {
+			resolve(res.data);
+		});
+	});
+};
+export const httpRequest = <T = any, D = any>(url: string, method: string, data?: T, params?: D, headers?: any) => {
+	return new Promise<BaseResponse>(resolve => {
+		request({
+			url,
+			method,
+			params,
+			data,
+			headers
 		}).then((res: AxiosResponse<BaseResponse>) => {
 			resolve(res.data);
 		});
