@@ -4,6 +4,8 @@ import eslintPlugin from "vite-plugin-eslint";
 import styleImport, { VantResolve } from "vite-plugin-style-import";
 import VueSetupExtend from "vite-plugin-vue-setup-extend";
 import path from "path";
+import Components from "unplugin-vue-components/vite";
+import { VantResolver } from "unplugin-vue-components/resolvers";
 
 export default defineConfig({
 	plugins: [
@@ -21,6 +23,9 @@ export default defineConfig({
 					resolveStyle: name => `../es/${name}/style`
 				}
 			]
+		}),
+		Components({
+			resolvers: [VantResolver()]
 		})
 	],
 	css: {

@@ -6,7 +6,7 @@
 	</teleport>
 </template>
 
-<script setup name="ToTop">
+<script setup name="ToTop" lang="ts">
 import { Icon } from "vant";
 defineEmits(["click"]);
 </script>

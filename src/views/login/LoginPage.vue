@@ -58,7 +58,7 @@ const sendCodeHandler = async () => {
 		email: form.email
 	});
 	if (res.code === 1) {
-		Notify({
+		new Notify({
 			type: "success",
 			message: "发送成功"
 		});
@@ -73,7 +73,7 @@ const sendCodeHandler = async () => {
 			}
 		}, 1000);
 	} else {
-		Notify({
+		new Notify({
 			type: "danger",
 			message: "发送失败"
 		});

@@ -1,6 +1,3 @@
-import { sendGetReviewCount, sendGetReviewList, sendSaveReviews } from "@/api/module/reviews";
-import { sendSubmitOrders } from "@/api/module/orders";
-
 export interface LoginSendType {
 	email: string;
 	code: string;

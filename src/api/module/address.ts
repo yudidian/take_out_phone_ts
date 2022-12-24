@@ -1,8 +1,8 @@
 import { httpRequest } from "@/api/request";
 import { AddAddress } from "@/views/home/interface/type";
 // 获取地址列表
-export const getAddressList = () => {
-	return httpRequest("/address/list", "GET");
+export const getAddressList = <T = any, D = any>() => {
+	return httpRequest<T, D>("/address/list", "GET");
 };
 // 获取默认地址
 export const getDefaultAddress = () => {

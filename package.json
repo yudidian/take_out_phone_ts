@@ -23,7 +23,8 @@
     "mitt": "^3.0.0",
     "qs": "^6.11.0",
     "stylelint": "^14.14.0",
-    "vant": "^3.5.0",
+    "unplugin-vue-components": "^0.22.12",
+    "vant": "^4.0.4",
     "vue": "^3.2.41",
     "vue-clipboard3": "^2.0.0",
     "vue-router": "^4.0.15",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@types/lodash": "^4.14.191",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "@vitejs/plugin-vue": "^2.3.3",

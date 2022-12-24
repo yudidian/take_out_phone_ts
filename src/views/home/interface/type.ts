@@ -15,6 +15,7 @@ export interface DishList {
 	categoryId: string;
 	code: string;
 	description: string;
+	flavors: string;
 	FlavorsList: Array<Flavors>;
 	id: string;
 	image: string;
@@ -39,14 +40,8 @@ export interface FlavorsList {
 export interface AddCartType {
 	//名称
 	name: string;
-	//用户id
-	userId: string;
-	//菜品id
-	dishId: string;
 	//套餐id
 	setmealId: string;
-	//口味
-	dishFlavor: string;
 	//数量
 	number: number;
 	//金额
@@ -55,6 +50,7 @@ export interface AddCartType {
 	image: string;
 }
 export interface AddAddress {
+	id?: string;
 	//收货人
 	consignee: string;
 	//手机号

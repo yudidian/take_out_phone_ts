@@ -6,16 +6,16 @@
 	</div>
 </template>
 
-<script setup name="CartPage">
+<script setup name="CartPage" lang="ts">
 import { SubmitBar, NavBar } from "vant";
 import { ref } from "vue";
 const disabled = ref(false);
 const cartList = ref(null);
 const price = ref(0);
-const getPrice = val => {
+const getPrice = (val: number) => {
 	price.value = val;
 };
-const getCartLength = val => {
+const getCartLength = (val: number) => {
 	disabled.value = !(val > 0);
 };
 </script>

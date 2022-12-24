@@ -36,7 +36,7 @@ request.interceptors.response.use(
 			if (router.currentRoute.value.path !== "/login") {
 				store.commit("setUserAction", router.currentRoute.value.fullPath);
 			}
-			Notify({
+			new Notify({
 				message: "用户信息过期",
 				type: "warning"
 			});
@@ -60,7 +60,7 @@ request.interceptors.response.use(
 		} else if (message.includes("Request failed with status code")) {
 			message = "系统接口异常";
 		}
-		Notify({
+		new Notify({
 			message,
 			type: "warning"
 		});
@@ -101,28 +101,27 @@ export const httpGet = <T = any>(url: string, params?: T) => {
 		});
 	});
 };
-export const httpDelete = <T = any>(url: string, params: T) => {
-	return new Promise<BaseResponse>(resolve => {
-		request({
-			url,
-			method: "delete",
-			params
-		}).then((res: AxiosResponse<BaseResponse>) => {
-			resolve(res.data);
-		});
-	});
-};
-export const httpRequest = <T = any, D = any>(url: string, method: string, data?: T, params?: D, headers?: any) => {
-	return new Promise<BaseResponse>(resolve => {
+// export const httpDelete = <T = any>(url: string, params: T) => {
+// 	return new Promise<BaseResponse>(resolve => {
+// 		request({
+// 			url,
+// 			method: "delete",
+// 			params
+// 		}).then((res: AxiosResponse<BaseResponse>) => {
+// 			resolve(res.data);
+// 		});
+// 	});
+// };
+export const httpRequest = <T = any, D = any>(url: string, method: string, data?: any, params?: any, headers?: any) => {
+	return new Promise<BaseResponse<T, D>>(resolve => {
 		request({
 			url,
 			method,
 			params,
 			data,
 			headers
-		}).then((res: AxiosResponse<BaseResponse>) => {
+		}).then((res: AxiosResponse<BaseResponse<T, D>>) => {
 			resolve(res.data);
 		});
 	});
 };
-export default request;

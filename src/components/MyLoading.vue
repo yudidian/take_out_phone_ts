@@ -6,7 +6,7 @@
 	</Overlay>
 </template>
 
-<script setup name="MyLogin">
+<script setup name="MyLogin" lang="ts">
 import { Overlay } from "vant";
 const props = defineProps({
 	show: {
