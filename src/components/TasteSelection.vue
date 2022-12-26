@@ -36,7 +36,7 @@
 
 <script setup name="TasteSelection">
 import { watch, ref } from "vue";
-import { sendAddCart } from "@/api/module/goods.js";
+import { sendAddCart } from "@/api/module/goods";
 import { Icon, Toast } from "vant";
 const emit = defineEmits(["hide", "changeHandler"]);
 watch(

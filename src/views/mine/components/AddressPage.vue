@@ -26,7 +26,7 @@
 	</section>
 </template>
 <script setup name="AddressPage" lang="ts">
-import { AddressList, NavBar, Cell, Switch, Notify, Empty } from "vant";
+import { AddressList, NavBar, Cell, Switch, Empty, showNotify } from "vant";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { getAddressList, setDefaultAddress } from "@/api/module/address";
@@ -48,7 +48,7 @@ const onEdit = (item: AddressListType) => {
 const sendAddressList = async () => {
 	const res = await getAddressList<null, Array<AddAddress> | null>();
 	if (res.code !== 1) {
-		return new Notify({
+		return showNotify({
 			type: "danger",
 			message: res.msg
 		});

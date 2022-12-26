@@ -50,7 +50,7 @@
 </template>
 
 <script setup name="PersonalCenter" lang="ts">
-import { CellGroup, Cell, Toast, Icon, Badge, ImagePreview } from "vant";
+import { CellGroup, Cell, showFailToast, Icon, Badge, ImagePreview } from "vant";
 import { onMounted, ref } from "vue";
 import { sendGetNewOrders, sendGetUserInfo, sendPendingReceipt } from "@/api/module/user";
 import LatestOrder from "./components/LatestOrder.vue";
@@ -77,7 +77,7 @@ const getUserInfo = async () => {
 	if (res.code === 1) {
 		userInfo.value = res.info;
 	} else {
-		Toast.fail("用户信息获取失败");
+		showFailToast("用户信息获取失败");
 	}
 };
 // 获取待收货数量
@@ -86,7 +86,7 @@ const getPendingReceipt = async () => {
 	if (res.code === 1) {
 		orderSize.value = res.data.size;
 	} else {
-		Toast.fail("信息获取失败");
+		showFailToast("信息获取失败");
 	}
 };
 </script>

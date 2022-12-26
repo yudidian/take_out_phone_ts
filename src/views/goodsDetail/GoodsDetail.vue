@@ -6,7 +6,7 @@
 		<Image
 			class="goods-image"
 			:src="goodsInfo?.image !== undefined ? IMG_URL + goodsInfo?.image : ''"
-			@click="ImagePreview([IMG_URL + goodsInfo?.image])"
+			@click="showImagePreview([IMG_URL + goodsInfo?.image])"
 		/>
 		<CellGroup>
 			<div class="content">
@@ -52,7 +52,7 @@
 </template>
 
 <script setup name="GoodsDetail" lang="ts">
-import { Button, CellGroup, Notify, Toast, Image, ImagePreview } from "vant";
+import { Button, CellGroup, Image, showNotify, showSuccessToast, showFailToast, showToast, showImagePreview } from "vant";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import TabNav from "./component/TabNav.vue";
@@ -98,7 +98,7 @@ const setGoodsInfo = (res: any) => {
 		descriptionInfo.value = description.info;
 		isFavorites.value = favorites.data.isFavorites;
 	} else {
-		new Notify({
+		showNotify({
 			type: "danger",
 			message: "获取数据失败"
 		});
@@ -116,12 +116,12 @@ const changeFavorites = async () => {
 	});
 	if (res.code === 1) {
 		isFavorites.value = !isFavorites.value;
-		new Toast({
+		showToast({
 			type: "success",
 			message: "操作成功"
 		});
 	} else {
-		new Notify({
+		showNotify({
 			type: "danger",
 			message: "操作失败"
 		});
@@ -138,9 +138,9 @@ const addCart = async () => {
 	const res = await sendAddCart(data);
 	if (res.code === 1) {
 		await getCartList();
-		Toast.success("添加成功");
+		showSuccessToast("添加成功");
 	} else {
-		Toast.fail("添加失败");
+		showFailToast("添加失败");
 	}
 };
 </script>

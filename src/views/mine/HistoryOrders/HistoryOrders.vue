@@ -41,7 +41,7 @@
 				</Cell>
 				<ul class="order-wrapper" v-for="list in item.orderDetailList" :key="list.id">
 					<li class="order-item">
-						<Image width="1.2rem" height="1.2rem" fit="cover" :src="BASE_IMGE_URL + list.image" />
+						<Image width="1.2rem" height="1.2rem" fit="cover" :src="BASE_IMAGE_URL + list.image" />
 						<div class="order-name">
 							{{ list.name }}
 						</div>
@@ -79,13 +79,13 @@
 </template>
 
 <script name="HistoryOrders" setup lang="ts">
-import { NavBar, List, Icon, Toast, Image, CellGroup, Cell, Empty, Button, Dialog, Notify } from "vant";
+import { NavBar, List, Icon, showToast, Image, CellGroup, Cell, Empty, Button, Dialog, showSuccessToast, showNotify } from "vant";
 import { onMounted, ref } from "vue";
 import useScroll from "@/hooks/useScroll";
 import useClipboard from "vue-clipboard3";
 import { sendConfirmOrCancelOrders, sendGetHistoryOrders } from "@/api/module/user";
 import { OrderList } from "@/views/types/interface";
-const BASE_IMGE_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
+const BASE_IMAGE_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
 const { toClipboard } = useClipboard();
 const orderList = ref<Array<OrderList>>([]);
 const loading = ref(false);
@@ -116,15 +116,15 @@ const getHistoryOrders = async (page: number, pageSize: number) => {
 			finished.value = true;
 		}
 	} else {
-		new Toast(res.msg);
+		showToast(res.msg);
 	}
 };
 const copyOrderId = async (id: string) => {
 	try {
 		await toClipboard(id);
-		new Toast("订单号复制成功");
+		showToast("订单号复制成功");
 	} catch (e: any) {
-		new Toast(e.message);
+		showToast(e.message);
 	}
 };
 const confirmReceipt = (id: string, flag: boolean, index: number) => {
@@ -136,10 +136,10 @@ const confirmReceipt = (id: string, flag: boolean, index: number) => {
 			ordersId: id
 		});
 		if (res.code === 1) {
-			Toast.success("删除成功");
+			showSuccessToast("删除成功");
 			orderList.value.splice(index, 1);
 		} else {
-			new Notify({
+			showNotify({
 				type: "danger",
 				message: res.msg
 			});

@@ -1,4 +1,4 @@
-import { Notify } from "vant";
+import { showNotify } from "vant";
 import { reactive, ref } from "vue";
 import { getDistances } from "@/utils/calculateDistance";
 
@@ -36,7 +36,7 @@ const useMap = () => {
 					center[1] = position.lat;
 				} else {
 					// 危险通知
-					Notify({ type: "danger", message: "获取失败" });
+					showNotify({ type: "danger", message: "获取失败" });
 				}
 			},
 			(res: GeolocationPositionError) => {

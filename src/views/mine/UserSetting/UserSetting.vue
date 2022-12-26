@@ -26,7 +26,7 @@
 </template>
 
 <script setup name="UserSetting" lang="ts">
-import { Toast, Uploader, Form, CellGroup, Button, Field, RadioGroup, Radio, NavBar } from "vant";
+import { showToast, showSuccessToast, showFailToast, Uploader, Form, CellGroup, Button, Field, RadioGroup, Radio, NavBar } from "vant";
 import { sendGetUserInfo, sendUploadImage, sendUploadUserInfo } from "@/api/module/user";
 import { onMounted, ref } from "vue";
 import { FileList } from "@/views/types/interface";
@@ -51,7 +51,7 @@ const getUserInfo = async () => {
 			});
 		}
 	} else {
-		Toast.fail("用户信息获取失败");
+		showFailToast("用户信息获取失败");
 	}
 };
 const afterRead = async (file: { file: string | Blob }) => {
@@ -65,14 +65,14 @@ const afterRead = async (file: { file: string | Blob }) => {
 			url: BASE_URL + res.msg
 		});
 		userInfo.value.avatar = res.msg;
-		Toast.success("上传成功");
+		showSuccessToast("上传成功");
 	} else {
-		Toast.fail("上传失败");
+		showFailToast("上传失败");
 	}
 };
 const beforeRead = (file: { type: string | string[] }) => {
 	if (!file.type.includes("image")) {
-		new Toast("请上传图片");
+		showToast("请上传图片");
 		return false;
 	}
 	return true;
@@ -80,9 +80,9 @@ const beforeRead = (file: { type: string | string[] }) => {
 const onSubmit = async () => {
 	const res = await sendUploadUserInfo(userInfo.value);
 	if (res.code === 1) {
-		Toast.success(res.msg);
+		showSuccessToast(res.msg);
 	} else {
-		Toast.fail(res.msg);
+		showFailToast(res.msg);
 	}
 };
 </script>

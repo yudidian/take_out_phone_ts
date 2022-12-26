@@ -28,7 +28,7 @@
 
 <script setup name="AddressAdd" lang="ts">
 import { useRouter, useRoute } from "vue-router";
-import { AddressEdit, NavBar, Radio, RadioGroup, Toast } from "vant";
+import { AddressEdit, NavBar, Radio, RadioGroup, showFailToast, showSuccessToast } from "vant";
 import { onMounted, ref } from "vue";
 import { addAddress, getAddress, sendUpdateAddress } from "@/api/module/address";
 import { areaList } from "@vant/area-data";
@@ -65,10 +65,10 @@ const onSave = async (content: AddressEditType) => {
 		res = await addAddress(info);
 	}
 	if (res.code === 1) {
-		Toast.success(res.msg);
+		showSuccessToast(res.msg);
 		await router.replace("/address");
 	} else {
-		Toast.fail(res.msg);
+		showFailToast(res.msg);
 	}
 };
 // const onChangeDetail = (val: string) => {

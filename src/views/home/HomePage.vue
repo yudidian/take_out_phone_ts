@@ -70,7 +70,7 @@ import useMap from "@/hooks/useMap";
 import { getCategory, getDish, getSetmeal, sendGetSwiperList } from "@/api/module/homeIndex";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { Card, Button, ConfigProvider, Icon, Swipe, SwipeItem, Toast } from "vant";
+import { Card, Button, ConfigProvider, Icon, Swipe, SwipeItem, showFailToast } from "vant";
 import { CategoryList, DishList, SwiperList } from "@/views/home/interface/type";
 const router = useRouter();
 const showHeader = ref(false);
@@ -171,7 +171,7 @@ const getSwiperList = async () => {
 	if (res.code === 1) {
 		swiperList.value = res.info;
 	} else {
-		Toast.fail(res.msg);
+		showFailToast(res.msg);
 	}
 };
 </script>

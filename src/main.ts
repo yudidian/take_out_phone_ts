@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "@/router";
 import store, { key } from "@/store";
 import Mitt from "mitt";
+import "vant/lib/index.css";
 import "./style/common.css";
 import "amfe-flexible";
 import "./assets/font/iconfont.js";

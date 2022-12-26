@@ -23,7 +23,7 @@
 					placeholder="验证码"
 					:rules="[
 						{ required: true, message: '请填验证码' },
-						{ validator, message: '验证码为6位' }
+						{ validatorCode, message: '验证码为6位' }
 					]"
 				/>
 			</CellGroup>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup name="LoginPage" lang="ts">
-import { Form, Field, CellGroup, Button, Notify } from "vant";
+import { Form, Field, CellGroup, Button, showNotify } from "vant";
 import { onBeforeUnmount, reactive, ref } from "vue";
 import { sendCode } from "@/api/module/user";
 import { useStore } from "@/store";
@@ -58,7 +58,7 @@ const sendCodeHandler = async () => {
 		email: form.email
 	});
 	if (res.code === 1) {
-		new Notify({
+		showNotify({
 			type: "success",
 			message: "发送成功"
 		});
@@ -73,13 +73,13 @@ const sendCodeHandler = async () => {
 			}
 		}, 1000);
 	} else {
-		new Notify({
+		showNotify({
 			type: "danger",
 			message: "发送失败"
 		});
 	}
 };
-const validator = (val: string) => {
+const validatorCode = (val: string) => {
 	return /^[a-zA-z0-9]{6}$/.test(val);
 };
 // 组件销毁时清除所有定时器

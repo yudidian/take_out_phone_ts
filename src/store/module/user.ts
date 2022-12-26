@@ -1,5 +1,5 @@
 import { login } from "@/api/module/user";
-import { Notify } from "vant";
+import { showNotify } from "vant";
 import router from "@/router/index";
 import store from "@/store";
 import { Module } from "vuex";
@@ -31,14 +31,14 @@ const state: Module<UserStoreType, RootState> = {
 				localStorage.setItem("token", res.info.token);
 				localStorage.setItem("userId", res.info.userId);
 				// 登录成功开启对HomePage 的缓存
-				store.dispatch("addChildRouters", "HomePage");
+				store.dispatch("addChildRouters", "HomePage").then();
 				await router.replace(store.getters.action);
-				Notify({
+				showNotify({
 					type: "success",
 					message: "登录成功"
 				});
 			} else {
-				Notify({
+				showNotify({
 					type: "danger",
 					message: res.msg
 				});

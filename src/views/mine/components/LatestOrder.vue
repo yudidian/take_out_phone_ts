@@ -35,7 +35,7 @@
 
 <script setup name="LatestOrder" lang="ts">
 import useClipboard from "vue-clipboard3";
-import { Image, Icon, Toast, Empty } from "vant";
+import { Image, Icon, Empty, showToast } from "vant";
 import { computed } from "vue";
 const { toClipboard } = useClipboard();
 const BASE_IMAGE_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
@@ -48,9 +48,9 @@ const props = defineProps({
 const copyOrderId = async (id: string) => {
 	try {
 		await toClipboard(id);
-		new Toast("订单号复制成功");
+		showToast("订单号复制成功");
 	} catch (e: any) {
-		new Toast(e.message);
+		showToast(e.message);
 	}
 };
 const allCount = computed(() => {

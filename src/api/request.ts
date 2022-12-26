@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { Notify } from "vant";
+import { showNotify } from "vant";
 import router from "@/router/index";
 import store from "@/store";
 import { BaseResponse } from "@/views/types/globle";
@@ -36,7 +36,7 @@ request.interceptors.response.use(
 			if (router.currentRoute.value.path !== "/login") {
 				store.commit("setUserAction", router.currentRoute.value.fullPath);
 			}
-			new Notify({
+			showNotify({
 				message: "用户信息过期",
 				type: "warning"
 			});
@@ -60,7 +60,7 @@ request.interceptors.response.use(
 		} else if (message.includes("Request failed with status code")) {
 			message = "系统接口异常";
 		}
-		new Notify({
+		showNotify({
 			message,
 			type: "warning"
 		});

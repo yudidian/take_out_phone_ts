@@ -1,6 +1,6 @@
 import { reactive, watch } from "vue";
 import { sendGetCartList } from "@/api/module/goods";
-import { Notify } from "vant";
+import { showNotify } from "vant";
 import { useStore } from "@/store";
 import { CartInfoType } from "@/hooks/interface/type";
 
@@ -32,7 +32,7 @@ export const useCart = () => {
 		if (res.code === 1) {
 			cartInfo.cartList = res.info;
 		} else {
-			new Notify({
+			showNotify({
 				type: "danger",
 				message: "获取数据失败"
 			});
