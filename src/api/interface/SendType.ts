@@ -15,15 +15,15 @@ export interface SaveReviewsType {
 	image: string;
 }
 export interface GetReviewListType {
-	dishId: string;
-	setmealId: string;
+	dishId?: string;
+	setmealId?: string;
 	reta: number;
 	page: number;
 	pageSize: number;
 }
 export interface GetReviewCountType {
-	dishId: string;
-	setmealId: string;
+	dishId?: string;
+	setmealId?: string;
 }
 export interface SubmitOrdersType {
 	addressBookId: string;

@@ -55,23 +55,21 @@ export interface AddAddress {
 	consignee: string;
 	//手机号
 	phone: string;
-	//性别 0 女 1 男
-	sex: number;
 	//省级区划编号
-	provinceCode?: number;
+	provinceCode?: string;
 	//省级名称
 	provinceName: string;
 	//市级区划编号
-	cityCode?: number;
+	cityCode?: string;
 	//市级名称
 	cityName: string;
 	//区级区划编号
-	districtCode?: number;
+	districtCode?: string;
 	//区级名称
 	districtName: string;
 	//详细地址
 	detail: string;
 	//标签
 	label: string;
-	isDefault: number;
+	isDefault?: number;
 }

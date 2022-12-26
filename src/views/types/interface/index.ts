@@ -60,3 +60,50 @@ export interface AddressListType {
 	address: string;
 	isDefault: boolean;
 }
+export interface reviewType {
+	username: string;
+	images: Array<string>;
+	// 回复类容
+	storeReview: string;
+	// 回复时间
+	reviewTime: string;
+	// @ApiModelProperty("ID")
+	id: string;
+
+	// @ApiModelProperty("普通菜品ID")
+	dishId?: string;
+
+	// @ApiModelProperty("套餐ID")
+	setmealId?: string;
+
+	// @ApiModelProperty("用户头像")
+	avatar: string;
+
+	// @ApiModelProperty("评分等级")
+	rating: number;
+
+	// @ApiModelProperty("评论类容")
+	text: string;
+
+	// @ApiModelProperty("评论时间")
+	createTime: string;
+
+	// @ApiModelProperty("评论图片")
+	// @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	image: string;
+}
+export interface reviewList {
+	records: Array<reviewType>;
+	total: number;
+	pages: number;
+}
+export interface AddressEditType {
+	id: string;
+	name: string;
+	tel: string;
+	city: string;
+	areaCode: string;
+	province: string;
+	county: string;
+	addressDetail: string;
+}

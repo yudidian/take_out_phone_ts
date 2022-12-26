@@ -11,7 +11,6 @@
 		:search-result="searchResult"
 		:area-columns-placeholder="['请选择', '请选择', '请选择']"
 		@save="onSave"
-		@change-detail="onChangeDetail"
 	>
 		<template #default>
 			<div class="address-tag">
@@ -33,10 +32,11 @@ import { AddressEdit, NavBar, Radio, RadioGroup, Toast } from "vant";
 import { onMounted, ref } from "vue";
 import { addAddress, getAddress, sendUpdateAddress } from "@/api/module/address";
 import { areaList } from "@vant/area-data";
+import { AddressEditType } from "@/views/types/interface";
 const checked = ref("无");
 onMounted(() => {
 	if (route.query.id) {
-		getAddressById(route.query.id);
+		getAddressById(route.query.id as string);
 	}
 });
 const route = useRoute();
@@ -45,8 +45,9 @@ const addAddressEdit = ref(null);
 const searchResult = ref([]);
 const addressInfo = ref({});
 // 保存
-const onSave = async content => {
+const onSave = async (content: AddressEditType) => {
 	const info = {
+		id: "",
 		consignee: content.name,
 		phone: content.tel,
 		provinceName: content.province,
@@ -70,20 +71,20 @@ const onSave = async content => {
 		Toast.fail(res.msg);
 	}
 };
-const onChangeDetail = val => {
-	if (val) {
-		searchResult.value = [
-			{
-				name: "黄龙万科中心",
-				address: "杭州市西湖区"
-			}
-		];
-	} else {
-		searchResult.value = [];
-	}
-};
+// const onChangeDetail = (val: string) => {
+// 	if (val) {
+// 		searchResult.value = [
+// 			{
+// 				name: "黄龙万科中心",
+// 				address: "杭州市西湖区"
+// 			}
+// 		];
+// 	} else {
+// 		searchResult.value = [];
+// 	}
+// };
 
-const getAddressById = async id => {
+const getAddressById = async (id: string) => {
 	const res = await getAddress(id);
 	addressInfo.value = {
 		id: res.info.id,
