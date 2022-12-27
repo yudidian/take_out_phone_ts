@@ -107,11 +107,11 @@ export interface AddressEditType {
 	county: string;
 	addressDetail: string;
 }
-export interface OrderInfoType {
-	addressBookId: string;
-	remark: string; // 备注
-	payMethod: number; // 1 微信 2 支付宝
-}
+// export interface OrderInfoType {
+// 	addressBookId: string;
+// 	remark: string; // 备注
+// 	payMethod: number; // 1 微信 2 支付宝
+// }
 export interface AddAddressType {
 	id?: string;
 	//收货人

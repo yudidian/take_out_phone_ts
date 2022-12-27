@@ -8,8 +8,8 @@ export interface LoginResponseType {
 }
 
 export interface SaveReviewsType {
-	dishId: string;
-	setmealId: string;
+	dishId?: string;
+	setmealId?: string;
 	rating: number;
 	text: string;
 	image: string;
