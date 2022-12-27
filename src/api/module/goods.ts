@@ -44,6 +44,6 @@ export const sendDeleteCartOne = (data: { dishId?: string; setmealId?: string })
 export const sendGetDishDescription = (id: string) => {
 	return httpRequest(`/goods/description/${id}`, "get");
 };
-export const sendGetStoreUpList = (params: { page: number; pageSize: number }) => {
-	return httpRequest("/favorites/list", "get", null, params);
+export const sendGetStoreUpList = <T = any, D = any>(params: { page: number; pageSize: number }) => {
+	return httpRequest<T, D>("/favorites/list", "get", null, params);
 };

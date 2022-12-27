@@ -107,3 +107,54 @@ export interface AddressEditType {
 	county: string;
 	addressDetail: string;
 }
+export interface OrderInfoType {
+	addressBookId: string;
+	remark: string; // 备注
+	payMethod: number; // 1 微信 2 支付宝
+}
+export interface AddAddressType {
+	id?: string;
+	//收货人
+	consignee: string;
+	//手机号
+	phone: string;
+	//省级区划编号
+	provinceCode?: string;
+	//省级名称
+	provinceName: string;
+	//市级区划编号
+	cityCode?: string;
+	//市级名称
+	cityName: string;
+	//区级区划编号
+	districtCode?: string;
+	//区级名称
+	districtName: string;
+	//详细地址
+	detail: string;
+	//标签
+	label: string;
+	isDefault?: number;
+}
+export interface StoreUpListType {
+	// @ApiModelProperty("菜品ID")
+	dishId?: string;
+
+	// @ApiModelProperty("套餐ID")
+	setmealId?: string;
+
+	// @ApiModelProperty("套餐或菜品标识")
+	type: string;
+
+	// @ApiModelProperty("套餐或者菜品名称")
+	name: string;
+
+	// @ApiModelProperty("套餐或者菜品图片")
+	image: string;
+	// @ApiModelProperty("主表ID")
+	id: string;
+}
+export interface RStoreUpListType {
+	records: StoreUpListType[];
+	total: number;
+}

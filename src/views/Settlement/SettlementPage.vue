@@ -10,13 +10,13 @@
 	</div>
 </template>
 
-<script setup name="SettlementPage">
+<script setup name="SettlementPage" lang="ts">
 import OrderList from "./component/OrderList.vue";
 import { sendSubmitOrders } from "@/api/module/orders";
-import { NavBar, ConfigProvider, SubmitBar, Toast, Dialog } from "vant";
+import { NavBar, ConfigProvider, SubmitBar, showConfirmDialog, showSuccessToast, showFailToast } from "vant";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-const orderList = ref(null);
+const orderList = ref<InstanceType<typeof OrderList>>(null);
 const allPrice = ref(0);
 const router = useRouter();
 // 内的值会被转换成对应 CSS 变量
@@ -27,16 +27,16 @@ const themeVars = {
 };
 // 提交信息
 const onSubmit = () => {
-	Dialog.alert({
+	showConfirmDialog({
 		title: "用户需知",
 		message: "本网站仅供学习使用，下单不会有任何实际效果！"
 	}).then(async () => {
-		const res = await sendSubmitOrders(orderList.value.sendInfo);
+		const res = await sendSubmitOrders(orderList.value?.sendInfo);
 		if (res.code === 1) {
-			Toast.success(res.msg);
+			showSuccessToast(res.msg);
 			await router.replace("/mine");
 		} else {
-			Toast.fail(res.msg);
+			showFailToast(res.msg);
 		}
 	});
 };
