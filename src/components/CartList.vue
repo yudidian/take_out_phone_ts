@@ -10,7 +10,7 @@
 		</Empty>
 		<CellGroup inset v-else>
 			<Cell style="background-color: #ffffff" v-for="(item, index) in cartInfoList" :key="item.id">
-				<Card class="cart-item" :price="(item.amount / 100).toFixed(2)" :title="item.name" :thumb="IMG_URL + item.image">
+				<Card class="cart-item" :title="item.name" :thumb="IMG_URL + item.image">
 					<template #footer>
 						<Button round size="mini" icon="minus" @click="addOrLessHandler(item, 'less', index)" />
 						<span class="cart-number">{{ item.number }}</span>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup name="CartList" lang="ts">
-import { Button, Card, Cell, CellGroup, Dialog, Notify, Empty } from "vant";
+import { Button, Card, Cell, CellGroup, Dialog, Empty, showNotify } from "vant";
 import { sendAddCart, sendDeleteCartOne, sendGetCartList, sendLessCartCount } from "@/api/module/goods";
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "@/store";
@@ -48,7 +48,7 @@ const price = computed(() => {
 // 商品数量加减
 const addOrLessHandler = async (item: CartList, flag: string, index: number) => {
 	if (item.number >= 99) {
-		Notify({
+		showNotify({
 			type: "danger",
 			message: "商品可添加数量最大为99"
 		});
@@ -62,7 +62,7 @@ const addOrLessHandler = async (item: CartList, flag: string, index: number) => 
 				cartInfoList.value[index] = res.info;
 				emits("getPrice", price.value);
 			} else {
-				Notify({
+				showNotify({
 					type: "danger",
 					message: res.msg
 				});
@@ -77,7 +77,7 @@ const addOrLessHandler = async (item: CartList, flag: string, index: number) => 
 					cartInfoList.value.splice(index, 1);
 					emits("getPrice", price.value);
 				} else {
-					Notify({
+					showNotify({
 						type: "danger",
 						message: res.msg
 					});
@@ -91,7 +91,7 @@ const addOrLessHandler = async (item: CartList, flag: string, index: number) => 
 			cartInfoList.value[index] = res.info;
 			emits("getPrice", price.value);
 		} else {
-			Notify({
+			showNotify({
 				type: "danger",
 				message: res.msg
 			});
@@ -110,7 +110,7 @@ const getCartList = async () => {
 		cartInfoList.value = res.info;
 		emits("getPrice", price.value);
 	} else {
-		Notify({
+		showNotify({
 			type: "danger",
 			message: res.msg
 		});

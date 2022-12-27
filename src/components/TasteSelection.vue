@@ -37,7 +37,7 @@
 <script setup name="TasteSelection">
 import { watch, ref } from "vue";
 import { sendAddCart } from "@/api/module/goods";
-import { Icon, Toast } from "vant";
+import { Icon, showFailToast, showSuccessToast } from "vant";
 const emit = defineEmits(["hide", "changeHandler"]);
 watch(
 	() => props.show,
@@ -106,11 +106,11 @@ const addCart = async () => {
 	const res = await sendAddCart(data);
 	show.value = false;
 	if (res.code === 1) {
-		Toast.success("添加成功");
+		showSuccessToast("添加成功");
 		emit("changeHandler");
 		emit("hide");
 	} else {
-		Toast.fail("添加失败");
+		showFailToast("添加失败");
 	}
 };
 </script>

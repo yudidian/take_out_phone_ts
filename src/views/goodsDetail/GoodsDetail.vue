@@ -12,7 +12,7 @@
 			<div class="content">
 				<div class="header">
 					<p class="title-name .txt-cut">
-						{{ goodsInfo.name }}
+						{{ goodsInfo?.name }}
 					</p>
 					<div class="left" @click="changeFavorites">
 						<svg class="icon" aria-hidden="true" v-if="isFavorites">
@@ -36,7 +36,7 @@
 						<Button icon="plus" type="primary" size="mini" @click="addCart" round v-else />
 					</div>
 				</div>
-				<TabNav :description-info="descriptionInfo" :id="goodsInfo?.id" :type="$route.query.type" />
+				<TabNav v-if="descriptionInfo" :description-info="descriptionInfo" :id="goodsInfo?.id" :type="$route.query.type" />
 			</div>
 		</CellGroup>
 		<CartBottom :amount="cartInfo.amount" />

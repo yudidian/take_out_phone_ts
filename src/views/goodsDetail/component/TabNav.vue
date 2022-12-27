@@ -10,31 +10,31 @@
 				<li class="wrapper-item">
 					<span class="left">掌柜描述</span>
 					<p class="right">
-						{{ descriptionInfo.description ? descriptionInfo.description : "暂无" }}
+						{{ descriptionInfo?.description ? descriptionInfo.description : "暂无" }}
 					</p>
 				</li>
 				<li class="wrapper-item">
 					<span class="left">主料</span>
 					<p class="right">
-						{{ descriptionInfo.mainMeterial ? descriptionInfo.mainMeterial : "暂无" }}
+						{{ descriptionInfo?.mainMeterial ? descriptionInfo.mainMeterial : "暂无" }}
 					</p>
 				</li>
 				<li class="wrapper-item">
 					<span class="left">制作方式</span>
 					<p class="right">
-						{{ descriptionInfo.productionMethod ? descriptionInfo.productionMethod : "暂无" }}
+						{{ descriptionInfo?.productionMethod ? descriptionInfo.productionMethod : "暂无" }}
 					</p>
 				</li>
 				<li class="wrapper-item">
 					<span class="left">数量</span>
 					<p class="right">
-						{{ descriptionInfo.count ? descriptionInfo.count : "暂无" }}
+						{{ descriptionInfo?.count ? descriptionInfo?.count : "暂无" }}
 					</p>
 				</li>
 				<li class="wrapper-item">
 					<span class="left">口味</span>
 					<p class="right">
-						{{ descriptionInfo.taste ? descriptionInfo.taste : "暂无" }}
+						{{ descriptionInfo?.taste ? descriptionInfo?.taste : "暂无" }}
 					</p>
 				</li>
 			</ul>

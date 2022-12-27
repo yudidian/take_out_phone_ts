@@ -1,19 +1,22 @@
 <template>
-	<router-view v-slot="{ Component }" v-if="isWeChat">
-		<keep-alive :include="store.getters.parentKeepalive">
-			<component :is="Component" :key="$route.name" />
-		</keep-alive>
-	</router-view>
-	<div v-else class="error-open">
-		<img src="./assets/image/false.png" alt="" />
-		<p>请在手机微信客户端打开链接</p>
-	</div>
-	<MyLoading :show="store.getters.showLoading" />
+	<ConfigProvider theme="theme">
+		<router-view v-slot="{ Component }" v-if="isWeChat">
+			<keep-alive :include="store.getters.parentKeepalive">
+				<component :is="Component" :key="$route.name" />
+			</keep-alive>
+		</router-view>
+		<div v-else class="error-open">
+			<img src="./assets/image/false.png" alt="" />
+			<p>请在手机微信客户端打开链接</p>
+		</div>
+		<MyLoading :show="store.getters.showLoading" />
+	</ConfigProvider>
 </template>
 <script setup lang="ts">
 import { useStore } from "@/store";
 import { isWeiXin } from "@/utils/common";
 import { ref } from "vue";
+import { ConfigProvider } from "vant";
 import SocketService from "@/utils/websocket";
 const WEB_SOCKET_URL = import.meta.env.DEV ? import.meta.env.VITE_LOCAL_WEBSOCK : import.meta.env.VITE_SERVER_WEBSOCK;
 const store = useStore();

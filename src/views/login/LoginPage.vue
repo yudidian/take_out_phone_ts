@@ -4,12 +4,15 @@
 		<Form @submit="onSubmit">
 			<CellGroup inset>
 				<Field
-					v-model="form.phone"
+					v-model="form.email"
 					:label-width="60"
-					name="用户名"
-					label="用户名"
-					placeholder="用户名"
-					:rules="[{ required: true, message: '请填写用户名' }]"
+					name="邮箱"
+					label="邮箱"
+					placeholder="请输入邮箱"
+					:rules="[
+						{ required: true, message: '请输入邮箱' },
+						{ validator: validatorEmail, message: '请检查邮箱格式' }
+					]"
 				>
 					<template #button>
 						<Button size="small" type="primary" ref="code" block @click="sendCodeHandler"> 发送验证码 </Button>
@@ -23,7 +26,7 @@
 					placeholder="验证码"
 					:rules="[
 						{ required: true, message: '请填验证码' },
-						{ validatorCode, message: '验证码为6位' }
+						{ validator: validatorCode, message: '验证码为6位' }
 					]"
 				/>
 			</CellGroup>
@@ -75,12 +78,15 @@ const sendCodeHandler = async () => {
 	} else {
 		showNotify({
 			type: "danger",
-			message: "发送失败"
+			message: res.msg
 		});
 	}
 };
 const validatorCode = (val: string) => {
 	return /^[a-zA-z0-9]{6}$/.test(val);
+};
+const validatorEmail = (val: string) => {
+	return /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/.test(val);
 };
 // 组件销毁时清除所有定时器
 onBeforeUnmount(() => {

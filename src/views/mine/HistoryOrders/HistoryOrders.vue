@@ -74,14 +74,13 @@
 				</Cell>
 			</CellGroup>
 		</List>
-		<ToTop v-if="isShowScroll" @click="returnTop(list.$el)" />
 	</div>
+	<BackTop target=".list-wrapper" />
 </template>
 
 <script name="HistoryOrders" setup lang="ts">
-import { NavBar, List, Icon, showToast, Image, CellGroup, Cell, Empty, Button, Dialog, showSuccessToast, showNotify } from "vant";
-import { onMounted, ref } from "vue";
-import useScroll from "@/hooks/useScroll";
+import { BackTop, NavBar, List, Icon, showToast, Image, CellGroup, Cell, Empty, Button, Dialog, showSuccessToast, showNotify } from "vant";
+import { ref } from "vue";
 import useClipboard from "vue-clipboard3";
 import { sendConfirmOrCancelOrders, sendGetHistoryOrders } from "@/api/module/user";
 import { OrderList } from "@/views/types/interface";
@@ -90,13 +89,7 @@ const { toClipboard } = useClipboard();
 const orderList = ref<Array<OrderList>>([]);
 const loading = ref(false);
 const finished = ref(false);
-const list = ref<HTMLElement | null>(null);
-const { listenScroll, isShowScroll, returnTop } = useScroll();
-
-onMounted(() => {
-	listenScroll(list.value as HTMLElement);
-});
-
+const list = ref<InstanceType<typeof List>>();
 const onLoad = () => {
 	const pageSize = 10;
 	const page = orderList.value.length / pageSize + 1;
@@ -167,7 +160,10 @@ const confirmReceipt = (id: string, flag: boolean, index: number) => {
 		display: flex;
 		padding-left: 20px;
 		align-items: center;
-
+		justify-content: flex-start;
+		:deep(.van-cell__value) {
+			text-align: left;
+		}
 		.orders-id {
 			margin-left: 10px;
 			margin-right: 10px;

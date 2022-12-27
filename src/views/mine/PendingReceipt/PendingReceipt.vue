@@ -63,20 +63,19 @@
 		<VanDialog v-model:show="isShowDialog" title="物流信息" show-cancel-button @confirm="isShowDialog = false" @cancel="isShowDialog = false">
 			<OrderSteps :state="orderState" />
 		</VanDialog>
-		<ToTop v-if="isShowScroll" @click="returnTop(list.$el)" />
+		<BackTop target=".list-wrapper" />
 	</div>
 </template>
 
 <script setup name="PendingReceipt" lang="ts">
-import { NavBar, List, Icon, Toast, Image, CellGroup, Cell, Button, Dialog, Empty, Notify, PullRefresh } from "vant";
-import { onMounted, ref } from "vue";
+import { BackTop, NavBar, List, Icon, Toast, Image, CellGroup, Cell, Button, Dialog, Empty, Notify, PullRefresh } from "vant";
+import { ref } from "vue";
 import useClipboard from "vue-clipboard3";
 import OrderSteps from "./component/OrderSteps.vue";
 import { sendCancelOrders, sendConfirmOrCancelOrders, sendGetHistoryOrders, sendGetOrderStates } from "@/api/module/user";
-import useScroll from "@/hooks/useScroll";
 import { OrderList } from "@/views/types/interface";
 const BASE_IMAGE_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
-const list = ref<HTMLElement | null>(null);
+const list = ref<InstanceType<typeof List> | null>(null);
 const { toClipboard } = useClipboard();
 const orderList = ref<Array<OrderList>>([]);
 const loading = ref(false);
@@ -84,10 +83,6 @@ const refreshLoading = ref(false);
 const finished = ref(false);
 const orderState = ref(1);
 const isShowDialog = ref(false);
-const { listenScroll, isShowScroll, returnTop } = useScroll();
-onMounted(() => {
-	listenScroll(list.value as HTMLElement);
-});
 const onLoad = () => {
 	const pageSize = 10;
 	const page = orderList.value.length / pageSize + 1;
