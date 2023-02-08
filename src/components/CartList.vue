@@ -12,6 +12,7 @@
 			<Cell style="background-color: #ffffff" v-for="(item, index) in cartInfoList" :key="item.id">
 				<Card class="cart-item" :title="item.name" :thumb="IMG_URL + item.image">
 					<template #footer>
+						<span class="goods-price">￥{{ (item.amount / 100).toFixed(2) }}</span>
 						<Button round size="mini" icon="minus" @click="addOrLessHandler(item, 'less', index)" />
 						<span class="cart-number">{{ item.number }}</span>
 						<Button round size="mini" icon="plus" @click="addOrLessHandler(item, 'add', index)" />
@@ -28,6 +29,7 @@ import { sendAddCart, sendDeleteCartOne, sendGetCartList, sendLessCartCount } fr
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "@/store";
 import { CartList } from "@/components/interface/type";
+
 const store = useStore();
 const emits = defineEmits(["getPrice", "getCartLength"]);
 const IMG_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
@@ -129,29 +131,41 @@ watch(
 .cart-wrapper {
 	overflow-y: auto;
 	height: calc(100vh - 96px);
+
 	.cart-item {
 		position: relative;
 		height: 88px;
 		margin-top: 10px;
 		background-color: #ffffff;
+
 		:deep(.van-card__title) {
 			margin-top: 10px;
 		}
+
 		:deep(.van-card__thumb) {
 			width: 80px;
 			height: 80px;
 		}
+
 		:deep(.van-card__bottom) {
 			margin-bottom: 4px;
 		}
+
 		:deep(.van-card__footer) {
 			position: absolute;
 			bottom: -4px;
 			height: 24px;
-			left: 70%;
+			left: 37%;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
+			.goods-price {
+				width: 90px;
+				overflow: hidden;
+				margin-right: 32px;
+				text-align: left;
+				color: red;
+			}
 			.cart-number {
 				height: 24px;
 				font-size: 14px;
