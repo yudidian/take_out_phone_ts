@@ -12,7 +12,7 @@
 			<Cell style="background-color: #ffffff" v-for="(item, index) in cartInfoList" :key="item.id">
 				<Card class="cart-item" :title="item.name" :thumb="IMG_URL + item.image">
 					<template #footer>
-						<span class="goods-price">￥{{ (item.amount / 100).toFixed(2) }}</span>
+						<span :class="$route.name === 'CartPage' ? 'goods-price' : 'orders-price'">￥{{ (item.amount / 100).toFixed(2) }}</span>
 						<Button round size="mini" icon="minus" @click="addOrLessHandler(item, 'less', index)" />
 						<span class="cart-number">{{ item.number }}</span>
 						<Button round size="mini" icon="plus" @click="addOrLessHandler(item, 'add', index)" />
@@ -24,7 +24,7 @@
 </template>
 
 <script setup name="CartList" lang="ts">
-import { Button, Card, Cell, CellGroup, Dialog, Empty, showNotify } from "vant";
+import { Button, Card, Cell, CellGroup, showConfirmDialog, Empty, showNotify } from "vant";
 import { sendAddCart, sendDeleteCartOne, sendGetCartList, sendLessCartCount } from "@/api/module/goods";
 import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "@/store";
@@ -70,7 +70,7 @@ const addOrLessHandler = async (item: CartList, flag: string, index: number) => 
 				});
 			}
 		} else {
-			Dialog.confirm({
+			showConfirmDialog({
 				title: "标题",
 				message: "是否删除改商品"
 			}).then(async () => {
@@ -87,16 +87,23 @@ const addOrLessHandler = async (item: CartList, flag: string, index: number) => 
 			});
 		}
 	} else {
-		// 加操作
-		const res = await sendAddCart(item);
-		if (res.code === 1) {
-			cartInfoList.value[index] = res.info;
-			emits("getPrice", price.value);
-		} else {
+		if (item.number > 99) {
 			showNotify({
 				type: "danger",
-				message: res.msg
+				message: "商品最大数量不能超过99"
 			});
+		} else {
+			// 加操作
+			const res = await sendAddCart(item);
+			if (res.code === 1) {
+				cartInfoList.value[index] = res.info;
+				emits("getPrice", price.value);
+			} else {
+				showNotify({
+					type: "danger",
+					message: res.msg
+				});
+			}
 		}
 	}
 };
@@ -163,6 +170,14 @@ watch(
 				width: 90px;
 				overflow: hidden;
 				margin-right: 32px;
+				text-align: left;
+				color: red;
+			}
+			.orders-price {
+				width: 90px;
+				overflow: hidden;
+				margin-right: -11px;
+				text-indent: 1em;
 				text-align: left;
 				color: red;
 			}

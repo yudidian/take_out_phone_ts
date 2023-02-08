@@ -1,7 +1,7 @@
 <template>
 	<CellGroup inset class="cell-item">
 		<Cell class="address-wrapper">
-			<header>
+			<header style="text-align: left">
 				<span class="address-title">地址信息</span>
 			</header>
 			<div class="address-info">

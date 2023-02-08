@@ -207,7 +207,11 @@ const onRefresh = () => {
 	.orders {
 		display: flex;
 		padding-left: 20px;
+		justify-content: flex-start;
 		align-items: center;
+		:deep(.van-cell__value) {
+			text-align: left;
+		}
 		.orders-id {
 			margin-left: 10px;
 			margin-right: 10px;

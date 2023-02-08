@@ -2,9 +2,9 @@
 	<section class="setting-page">
 		<NavBar title="用户设置" left-arrow @click-left="$router.back()" />
 		<CellGroup inset>
-			<Cell icon="shop-collect-o" title="用户信息编辑" is-link to="/user/setting" />
+			<Cell icon="shop-collect-o" title="个人信息编辑" is-link to="/user/setting" />
 			<Cell icon="guide-o" title="地址管理" is-link to="/address" />
-			<Cell icon="guide-o" title="联系客服" is-link to="/customerService" />
+			<Cell icon="service-o" title="联系客服" is-link to="/customerService" />
 		</CellGroup>
 		<Button class="exit-out" type="danger" round @click="exitOut"> 退出登录 </Button>
 	</section>

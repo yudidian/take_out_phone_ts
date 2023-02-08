@@ -1,6 +1,6 @@
 <template>
 	<div class="user-setting">
-		<NavBar title="用户信息编辑" left-arrow @click-left="$router.back()" />
+		<NavBar title="个人信息编辑" left-arrow @click-left="$router.back()" />
 		<Form @submit="onSubmit" class="form-wrapper">
 			<CellGroup inset>
 				<Field v-model="userInfo.name" name="name" label="用户名" placeholder="用户名" :rules="[{ required: true, message: '请填写用户名' }]" />

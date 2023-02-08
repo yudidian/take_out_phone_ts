@@ -40,17 +40,17 @@
 import { NavBar, Field, Button, Empty } from "vant";
 import SocketService from "@/utils/websocket";
 import { formatDate } from "@/utils/common";
-import { useStore } from "vuex";
+import store from "@/store";
 import { nextTick, onMounted, ref, watch } from "vue";
 import { MessageList } from "@/views/types/interface";
 const messageContent = ref();
 const IMG_URL = import.meta.env.VITE_LOCAL_SERVE_IMGE_URL;
 const WEB_SOCKET_URL = import.meta.env.DEV ? import.meta.env.VITE_LOCAL_WEBSOCK : import.meta.env.VITE_SERVER_WEBSOCK;
-const store = useStore();
 const socket = ref<SocketService>();
 const message = ref("");
 const messageList = ref<Array<MessageList>>([]);
 const init = () => {
+	console.log(store.getters);
 	socket.value = new SocketService(`${WEB_SOCKET_URL}/websocket/chart?userId=${store.getters.userId}`);
 	socket.value.ws.onmessage = msg => {
 		messageList.value = JSON.parse(msg.data);
