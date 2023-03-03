@@ -27,18 +27,27 @@ const themeVars = {
 };
 // 提交信息
 const onSubmit = () => {
-	showConfirmDialog({
-		title: "用户需知",
-		message: "本网站仅供学习使用，下单不会有任何实际效果！"
-	}).then(async () => {
-		const res = await sendSubmitOrders(orderList.value?.sendInfo);
-		if (res.code === 1) {
-			showSuccessToast(res.msg);
-			await router.replace("/mine");
-		} else {
-			showFailToast(res.msg);
-		}
-	});
+	console.log("orderList", orderList.value.sendInfo.remark);
+	if (orderList.value.sendInfo.remark.trim().length === 0) {
+		showConfirmDialog({
+			message: "确定备注为空吗？"
+		})
+			.then(() => {
+				showConfirmDialog({
+					title: "用户需知",
+					message: "本网站仅供学习使用，下单不会有任何实际效果！"
+				}).then(async () => {
+					const res = await sendSubmitOrders(orderList.value?.sendInfo);
+					if (res.code === 1) {
+						showSuccessToast(res.msg);
+						await router.replace("/mine");
+					} else {
+						showFailToast(res.msg);
+					}
+				});
+			})
+			.catch(() => {});
+	}
 };
 </script>
 

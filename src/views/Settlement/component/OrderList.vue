@@ -40,11 +40,11 @@
 </template>
 
 <script setup name="OrderList" lang="ts">
-import { CellGroup, Cell, Icon, ActionSheet, Field, Dialog } from "vant";
+import { CellGroup, Cell, Icon, ActionSheet, Field, showDialog } from "vant";
 import { getDefaultAddress } from "@/api/module/address";
 import { onMounted, ref, onBeforeUnmount, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { AddressEditType } from "@/views/types/interface";
+import { AddressEditType, SendInfoType } from "@/views/types/interface";
 import useCurrentInstance from "@/utils/useCurrentInstance";
 
 const { proxy } = useCurrentInstance();
@@ -56,7 +56,7 @@ const actions = [
 	{ name: "支付宝", pay: 2 }
 ];
 // 要发送给服务器的数据
-const sendInfo = reactive({
+const sendInfo = reactive<SendInfoType>({
 	addressBookId: "",
 	remark: "", // 备注
 	payMethod: 1 // 1 微信 2 支付宝
@@ -70,7 +70,7 @@ onMounted(() => {
 	// 注册全局事件用于接收用户选择信息
 	proxy?.$bus.on("changeUserAddress", (val: AddressEditType) => {
 		userAddress.value = { ...val };
-		sendInfo.addressBookId = val.id;
+		sendInfo.addressBookId = val?.id;
 	});
 });
 // 销毁注册的事件
@@ -87,11 +87,12 @@ const getUserDefaultAddress = async () => {
 	const res = await getDefaultAddress();
 	if (res.code === 1) {
 		if (res.info === null) {
-			Dialog.alert({
+			showDialog({
 				message: "还没有设置收货地址哦，快去设置吧~"
 			}).then(() => {
 				return router.push("/address");
 			});
+			return;
 		}
 		sendInfo.addressBookId = res.info.id;
 		userAddress.value = {

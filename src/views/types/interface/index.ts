@@ -158,3 +158,9 @@ export interface RStoreUpListType {
 	records: StoreUpListType[];
 	total: number;
 }
+
+export interface SendInfoType {
+	addressBookId: string;
+	remark: string; // 备注
+	payMethod: number; // 1 微信 2 支付宝
+}

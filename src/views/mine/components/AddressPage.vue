@@ -4,7 +4,7 @@
 		<Empty
 			image="https://fastly.jsdelivr.net/npm/@vant/assets/custom-empty-image.png"
 			image-size="80"
-			description="描述文字"
+			description="空空如也~~~"
 			v-if="addressList.length === 0"
 		/>
 		<AddressList :switchable="false" :list="addressList" default-tag-text="默认" @add="$router.push('/address/add')" @edit="onEdit">
