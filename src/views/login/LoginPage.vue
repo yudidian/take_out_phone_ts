@@ -15,7 +15,7 @@
 					]"
 				>
 					<template #button>
-						<Button size="small" type="primary" ref="code" block @click="sendCodeHandler"> 发送验证码 </Button>
+						<Button :disabled="btnDisabled" size="small" type="primary" ref="code" block @click="sendCodeHandler"> 发送验证码 </Button>
 					</template>
 				</Field>
 				<Field
@@ -29,6 +29,11 @@
 						{ validator: validatorCode, message: '验证码为6位' }
 					]"
 				/>
+				<Field name="radio">
+					<template #input>
+						<p style="text-align: center; width: 100%">登录即表示您已阅读并同意<a href="javascript:;" @click="showTermsService">服务条款</a></p>
+					</template>
+				</Field>
 			</CellGroup>
 			<div style="margin: 16px">
 				<Button round block type="primary" native-type="submit"> 登录 </Button>
@@ -38,7 +43,7 @@
 </template>
 
 <script setup name="LoginPage" lang="ts">
-import { Form, Field, CellGroup, Button, showNotify } from "vant";
+import { Form, Field, CellGroup, Button, showNotify, showDialog } from "vant";
 import { onBeforeUnmount, reactive, ref } from "vue";
 import { sendCode } from "@/api/module/user";
 import { useStore } from "@/store";
@@ -47,6 +52,7 @@ import { LoginSendType } from "@/api/interface/SendType";
 const store = useStore();
 const time = ref(60);
 const code = ref<HTMLElement | null>(null);
+const btnDisabled = ref(true);
 const form = reactive<LoginSendType>({
 	email: "",
 	code: ""
@@ -86,7 +92,19 @@ const validatorCode = (val: string) => {
 	return /^[a-zA-z0-9]{6}$/.test(val);
 };
 const validatorEmail = (val: string) => {
-	return /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/.test(val);
+	const res = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/.test(val);
+	btnDisabled.value = !res;
+	return res;
+};
+
+const showTermsService = () => {
+	showDialog({
+		messageAlign: "left",
+		title: "服务条款",
+		message:
+			"本服务条款及其下的服务受中华人民共和国法律管辖，并按之解释。\n" +
+			"用户在此特别声明并承诺，用户已充分注意本服务协议内免除或限制koala责任的条款，用户完全知晓并理解该等条款的规定并同意接受。"
+	});
 };
 // 组件销毁时清除所有定时器
 onBeforeUnmount(() => {
