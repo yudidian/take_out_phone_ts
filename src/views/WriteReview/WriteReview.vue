@@ -8,14 +8,25 @@
 						<img :src="BASE_URL + $route.query.image" alt="" />
 						<span class="name">{{ $route.query.name }}</span>
 					</div>
-					<Field name="rate" label="评分">
+					<Field name="rate" label="评分" :rules="[{ required: true, message: '请输入评分' }]">
 						<template #input>
 							<Rate color="#ffd21e" void-icon="star" void-color="#eee" v-model="reviews.rate" />
 						</template>
 					</Field>
-					<Field v-model="text" rows="2" autosize name="评论" label="评论" type="textarea" maxlength="250" placeholder="请输入评论" show-word-limit />
+					<Field
+						:rules="[{ required: true, message: '请输入评论' }]"
+						v-model="text"
+						rows="2"
+						autosize
+						name="评论"
+						label="评论"
+						type="textarea"
+						maxlength="250"
+						placeholder="请输入评论"
+						show-word-limit
+					/>
 				</div>
-				<Field name="uploader" label="图片">
+				<Field name="uploader" label="图片" :rules="[{ required: true, message: '请上传图片' }]">
 					<template #input>
 						<Uploader v-model="fileList" multiple :before-read="beforeRead" :after-read="afterRead" :max-count="3" />
 					</template>

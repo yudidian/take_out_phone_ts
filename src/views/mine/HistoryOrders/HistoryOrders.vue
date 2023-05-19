@@ -79,7 +79,7 @@
 </template>
 
 <script name="HistoryOrders" setup lang="ts">
-import { BackTop, NavBar, List, Icon, showToast, Image, CellGroup, Cell, Empty, Button, Dialog, showSuccessToast, showNotify } from "vant";
+import { BackTop, NavBar, List, Icon, showToast, Image, CellGroup, Cell, Empty, Button, showConfirmDialog, showSuccessToast, showNotify } from "vant";
 import { ref } from "vue";
 import useClipboard from "vue-clipboard3";
 import { sendConfirmOrCancelOrders, sendGetHistoryOrders } from "@/api/module/user";
@@ -121,7 +121,7 @@ const copyOrderId = async (id: string) => {
 	}
 };
 const confirmReceipt = (id: string, flag: boolean, index: number) => {
-	Dialog.confirm({
+	showConfirmDialog({
 		message: "是否删除订单，此操作不可逆！"
 	}).then(async () => {
 		const res = await sendConfirmOrCancelOrders({

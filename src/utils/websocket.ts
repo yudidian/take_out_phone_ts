@@ -49,18 +49,19 @@ export default class SocketService {
 	getMessage() {
 		this.ws.onmessage = msg => {
 			const res = JSON.parse(msg.data);
-			if (res.flag !== undefined && !res.flag) {
-				showFailToast({
-					duration: 0,
-					closeOnClick: true,
-					overlay: true,
-					message: res.msg,
-					onClose: () => {
-						window.open("about:blank", "_self");
-						window.close();
-					}
-				});
-			}
+			console.log(res);
+			// if (res.flag !== undefined && !res.flag) {
+			// 	showFailToast({
+			// 		duration: 0,
+			// 		closeOnClick: true,
+			// 		overlay: true,
+			// 		message: res.msg,
+			// 		onClose: () => {
+			// 			window.open("about:blank", "_self");
+			// 			window.close();
+			// 		}
+			// 	});
+			// }
 		};
 	}
 }

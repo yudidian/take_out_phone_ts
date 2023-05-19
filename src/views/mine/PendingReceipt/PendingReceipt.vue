@@ -68,7 +68,23 @@
 </template>
 
 <script setup name="PendingReceipt" lang="ts">
-import { BackTop, NavBar, List, Icon, Toast, Image, CellGroup, Cell, Button, Dialog, Empty, Notify, PullRefresh } from "vant";
+import {
+	showConfirmDialog,
+	showFailToast,
+	showSuccessToast,
+	showToast,
+	BackTop,
+	NavBar,
+	List,
+	Icon,
+	Image,
+	CellGroup,
+	Cell,
+	Button,
+	Empty,
+	showNotify,
+	PullRefresh
+} from "vant";
 import { ref } from "vue";
 import useClipboard from "vue-clipboard3";
 import OrderSteps from "./component/OrderSteps.vue";
@@ -101,15 +117,15 @@ const getHistoryOrders = async (page: number, pageSize: number) => {
 			finished.value = true;
 		}
 	} else {
-		new Toast(res.msg);
+		showToast(res.msg);
 	}
 };
 const copyOrderId = async (id: string) => {
 	try {
 		await toClipboard(id);
-		new Toast("订单号复制成功");
+		showToast("订单号复制成功");
 	} catch (e: any) {
-		new Toast(e.message);
+		showToast(e.message);
 	}
 };
 // 确认收货
@@ -119,10 +135,7 @@ const confirmReceipt = async (id: string, flag: boolean, index: number) => {
 		flag: 0
 	});
 	if (res.code === 1 && res.data.state === 2) {
-		new Toast({
-			type: "fail",
-			message: "商家还未发货"
-		});
+		showFailToast("商家还未发货");
 		return;
 	}
 	let msg: string;
@@ -131,7 +144,7 @@ const confirmReceipt = async (id: string, flag: boolean, index: number) => {
 	} else {
 		msg = "是否取消订单";
 	}
-	Dialog.confirm({
+	showConfirmDialog({
 		message: msg
 	}).then(async () => {
 		const res = await sendConfirmOrCancelOrders({
@@ -139,10 +152,10 @@ const confirmReceipt = async (id: string, flag: boolean, index: number) => {
 			ordersId: id
 		});
 		if (res.code === 1) {
-			Toast.success(res.msg);
+			showSuccessToast(res.msg);
 			orderList.value.splice(index, 1);
 		} else {
-			new Notify({
+			showNotify({
 				type: "danger",
 				message: res.msg
 			});
@@ -151,7 +164,7 @@ const confirmReceipt = async (id: string, flag: boolean, index: number) => {
 };
 // 取消订单
 const cancelReceipt = (number: string, index: number) => {
-	Dialog.confirm({
+	showConfirmDialog({
 		message: "是否取消订单"
 	}).then(async () => {
 		const res = await sendCancelOrders({
@@ -159,13 +172,13 @@ const cancelReceipt = (number: string, index: number) => {
 		});
 		if (res.code === 1) {
 			if (res.info.cancel) {
-				Toast.success(res.msg);
+				showSuccessToast(res.msg);
 				orderList.value.splice(index, 1);
 			} else {
-				Toast.fail(res.msg);
+				showFailToast(res.msg);
 			}
 		} else {
-			new Notify({
+			showNotify({
 				type: "danger",
 				message: res.msg
 			});
@@ -181,7 +194,7 @@ const showOrderStep = async (number: string) => {
 	if (res.code === 1) {
 		orderState.value = res.data.state;
 	} else {
-		new Notify({
+		showNotify({
 			type: "danger",
 			message: res.msg
 		});
