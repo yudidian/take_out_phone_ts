@@ -15,11 +15,12 @@
 <script setup name="LayoutPage" lang="ts">
 import { Tabbar, TabbarItem } from "vant";
 import { useRoute } from "vue-router";
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch, provide } from "vue";
 import { useStore } from "@/store";
 const store = useStore();
 const active = ref("HomePage");
 const route = useRoute();
+provide("store", store);
 watch(route, val => {
 	active.value = val.name as string;
 });
