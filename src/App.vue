@@ -5,9 +5,11 @@
 				<component :is="Component" :key="$route.name" />
 			</keep-alive>
 		</router-view>
-		<div v-else class="error-open">
-			<img src="./assets/image/false.png" alt="" />
-			<p>请在手机微信客户端打开链接</p>
+		<div v-else class="error-wrapper" style="width: 100vw; height: 100vh">
+			<div class="error-open">
+				<img src="./assets/image/false.png" alt="" />
+				<p>请在手机微信客户端打开链接</p>
+			</div>
 		</div>
 		<MyLoading :show="store.getters.showLoading" />
 	</ConfigProvider>
@@ -15,34 +17,16 @@
 <script setup lang="ts">
 import { useStore } from "@/store";
 import { isWeiXin } from "@/utils/common";
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import { ConfigProvider } from "vant";
-import SocketService from "@/utils/websocket";
-const WEB_SOCKET_URL = import.meta.env.DEV ? import.meta.env.VITE_LOCAL_WEBSOCK : import.meta.env.VITE_SERVER_WEBSOCK;
 const store = useStore();
+provide("store", store);
 const isWeChat = ref(isWeiXin());
-const init = () => {
-	if (store.getters.token) {
-		if (localStorage.getItem("reload") === null) {
-			localStorage.setItem("reload", "true");
-			window.location.reload();
-			return;
-		}
-		if (localStorage.getItem("reload") === "true") {
-			localStorage.setItem("reload", "false");
-			window.location.reload();
-			return;
-		}
-		const socket = new SocketService(`${WEB_SOCKET_URL}/websocket?userId=${store.getters.userId}`);
-		socket.getMessage();
-	}
-};
-init();
 </script>
 <style lang="scss" scoped>
 .error-open {
 	position: relative;
-	top: 50%;
+	top: 32%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	display: flex;

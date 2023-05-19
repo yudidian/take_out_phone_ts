@@ -160,9 +160,9 @@ watch(
 
 		:deep(.van-card__footer) {
 			position: absolute;
-			bottom: -4px;
+			bottom: 2px;
 			height: 24px;
-			left: 37%;
+			left: 35%;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;

@@ -1,4 +1,4 @@
-import { Toast } from "vant";
+import { showFailToast } from "vant";
 export default class SocketService {
 	private readonly url: string;
 	ws: WebSocket;
@@ -17,7 +17,7 @@ export default class SocketService {
 	connect() {
 		// 连接服务器
 		if (!window.WebSocket) {
-			Toast.fail("您的浏览器不支持WebSocket");
+			showFailToast("您的浏览器不支持WebSocket");
 			return;
 		}
 		// 连接成功的事件
@@ -50,7 +50,7 @@ export default class SocketService {
 		this.ws.onmessage = msg => {
 			const res = JSON.parse(msg.data);
 			if (res.flag !== undefined && !res.flag) {
-				Toast.fail({
+				showFailToast({
 					duration: 0,
 					closeOnClick: true,
 					overlay: true,

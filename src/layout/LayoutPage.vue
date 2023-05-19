@@ -15,16 +15,36 @@
 <script setup name="LayoutPage" lang="ts">
 import { Tabbar, TabbarItem } from "vant";
 import { useRoute } from "vue-router";
-import { onBeforeUnmount, onMounted, ref, watch, provide } from "vue";
-import { useStore } from "@/store";
-const store = useStore();
+import { onBeforeUnmount, onMounted, ref, watch, inject } from "vue";
+import SocketService from "@/utils/websocket";
+
+const WEB_SOCKET_URL = import.meta.env.DEV ? import.meta.env.VITE_LOCAL_WEBSOCK : import.meta.env.VITE_SERVER_WEBSOCK;
+const store: any = inject("store");
 const active = ref("HomePage");
 const route = useRoute();
-provide("store", store);
 watch(route, val => {
 	active.value = val.name as string;
 });
-
+const init = () => {
+	if (store.getters.token) {
+		console.log(localStorage.getItem("reload"));
+		if (!localStorage.getItem("reload")) {
+			localStorage.setItem("reload", "true");
+			window.location.reload();
+			return;
+		}
+		if (localStorage.getItem("reload") === "true") {
+			localStorage.setItem("reload", "false");
+			window.location.reload();
+			return;
+		}
+		const socket = new SocketService(`${WEB_SOCKET_URL}/websocket?userId=${store.getters.userId}`);
+		socket.getMessage();
+	}
+};
+onMounted(() => {
+	init();
+});
 onMounted(() => {
 	active.value = route.name as string;
 });
